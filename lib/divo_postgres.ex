@@ -16,7 +16,7 @@ defmodule DivoPostgres do
   @spec gen_stack([tuple()]) :: map()
   def gen_stack(envars) do
     config_opts = Keyword.get(envars, :config_opts)
-    init_script_path = Keyword.get(envars, :init_script)
+    init_script_path = Keyword.get(envars, :init_scripts)
     initdb_args = Keyword.get(envars, :initdb_args)
 
     envars
