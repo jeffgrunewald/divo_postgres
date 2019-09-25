@@ -18,7 +18,7 @@ The package can be installed by adding `divo` and `divo_postgres` to your list o
 def deps do
   [
     {:divo, "~> 1.1"},
-    {:divo_postgres, "~> 0.1.0"}
+    {:divo_postgres, "~> 0.1.1"}
   ]
 end
 ```
