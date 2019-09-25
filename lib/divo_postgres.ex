@@ -37,12 +37,12 @@ defmodule DivoPostgres do
         image: "postgres:#{version}",
         ports: ["5432:5432"],
         environment: [
-          "POSTGRES_DB=#{database}",
           "POSTGRES_PASSWORD=#{password}",
-          "POSTGRES_USER=#{user}"
+          "POSTGRES_USER=#{user}",
+          "POSTGRES_DB=#{database}"
         ],
         healthcheck: %{
-          test: ["CMD-SHELL", "pg_isready"],
+          test: ["CMD-SHELL", "pg_isready --username=#{user} --dbname=#{database}"],
           interval: "10s",
           timeout: "5s",
           retries: 5
