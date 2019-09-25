@@ -7,12 +7,12 @@ defmodule DivoPostgresTest do
         postgres: %{
           image: "postgres:latest",
           environment: [
-            "POSTGRES_DB=postgres",
             "POSTGRES_PASSWORD=postgres",
-            "POSTGRES_USER=postgres"
+            "POSTGRES_USER=postgres",
+            "POSTGRES_DB=postgres"
           ],
           healthcheck: %{
-            test: ["CMD-SHELL", "pg_isready"],
+            test: ["CMD-SHELL", "pg_isready --username=postgres --dbname=postgres"],
             interval: "10s",
             timeout: "5s",
             retries: 5
@@ -28,16 +28,17 @@ defmodule DivoPostgresTest do
 
     test "with custom user and database values" do
       expected = [
-            "POSTGRES_DB=bobs_stuff",
-            "POSTGRES_PASSWORD=ssshhhhhh",
-            "POSTGRES_USER=bob"
-          ]
+        "POSTGRES_PASSWORD=ssshhhhhh",
+        "POSTGRES_USER=bob",
+        "POSTGRES_DB=bobs_stuff"
+      ]
 
       args = [
         user: "bob",
         password: "ssshhhhhh",
         database: "bobs_stuff"
       ]
+
       actual = DivoPostgres.gen_stack(args)
 
       assert expected == actual.postgres.environment
@@ -50,7 +51,7 @@ defmodule DivoPostgresTest do
         "-c arg2"
       ]
 
-      actual = DivoPostgres.gen_stack([config_opts: ["arg1", "arg2"]])
+      actual = DivoPostgres.gen_stack(config_opts: ["arg1", "arg2"])
       assert expected == actual.postgres.command
     end
 
@@ -60,7 +61,13 @@ defmodule DivoPostgresTest do
         "test/support/init_scripts/script2.sh:/docker-entrypoint-initdb.d/script2.sh"
       ]
 
-      actual = DivoPostgres.gen_stack([init_scripts: ["test/support/init_scripts/script1.sql", "test/support/init_scripts/script2.sh"]])
+      actual =
+        DivoPostgres.gen_stack(
+          init_scripts: [
+            "test/support/init_scripts/script1.sql",
+            "test/support/init_scripts/script2.sh"
+          ]
+        )
 
       assert expected == actual.postgres.volumes
     end
@@ -68,9 +75,9 @@ defmodule DivoPostgresTest do
     test "with initdb args merged into default environment variables" do
       expected = [
         "POSTGRES_INITDB_ARGS=--data-checksums",
-        "POSTGRES_DB=bobs_stuff",
         "POSTGRES_PASSWORD=ssshhhhhh",
-        "POSTGRES_USER=bob"
+        "POSTGRES_USER=bob",
+        "POSTGRES_DB=bobs_stuff"
       ]
 
       args = [
@@ -81,6 +88,7 @@ defmodule DivoPostgresTest do
           "--data-checksums"
         ]
       ]
+
       actual = DivoPostgres.gen_stack(args)
 
       assert expected == actual.postgres.environment
