@@ -1,4 +1,3 @@
-[![Master](https://travis-ci.org/jeffgrunewald/divo_postgres.svg?branch=master)](https://travis-ci.org/jeffgrunewald/divo_postgres)
 [![Hex.pm Version](http://img.shields.io/hexpm/v/divo_postgres.svg?style=flat)](https://hex.pm/packages/divo_postgres)
 
 # Divo Postgres
