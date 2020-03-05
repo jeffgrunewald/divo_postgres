@@ -1,6 +1,8 @@
 defmodule DivoPostgres.MixProject do
   use Mix.Project
 
+  @github "https://github.com/jeffgrunewald/divo_postgres"
+
   def project do
     [
       app: :divo_postgres,
@@ -11,7 +13,8 @@ defmodule DivoPostgres.MixProject do
       docs: docs(),
       package: package(),
       description: description(),
-      source_url: "https://github.com/jeffgrunewald/divo_postgres"
+      source_url: @github,
+      homepage_url: @github
     ]
   end
 
@@ -23,7 +26,6 @@ defmodule DivoPostgres.MixProject do
 
   defp deps do
     [
-      {:credo, "~> 1.1", only: :dev, runtime: false},
       {:divo, "~> 1.1"},
       {:ex_doc, "~> 0.21", only: :dev}
     ]
@@ -38,17 +40,15 @@ defmodule DivoPostgres.MixProject do
     [
       maintainers: ["jeffgrunewald"],
       licenses: ["Apache 2.0"],
-      links: %{"GitHub" => "https://github.com/jeffgrunewald/divo_postgres"}
+      links: %{"GitHub" => @github}
     ]
   end
 
   defp docs do
     [
-      main: "readme",
-      source_url: "https://github.com/jeffgrunewald/divo_postgres",
-      extras: [
-        "README.md"
-      ]
+      source_url: @github,
+      extras: ["README.md"],
+      source_url_pattern: "#{@github}/blob/master/%{path}#L%{line}"
     ]
   end
 end
