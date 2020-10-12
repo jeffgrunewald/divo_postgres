@@ -93,5 +93,15 @@ defmodule DivoPostgresTest do
 
       assert expected == actual.postgres.environment
     end
+
+    test "with a custom port" do
+      actual = DivoPostgres.gen_stack([port: "9000"])
+
+      assert %{
+        postgres: %{
+          ports: ["9000:5432"]
+        }
+      } = actual
+    end
   end
 end
