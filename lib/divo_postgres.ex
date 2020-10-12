@@ -31,11 +31,12 @@ defmodule DivoPostgres do
     password = Keyword.get(envars, :password, "postgres")
     user = Keyword.get(envars, :user, "postgres")
     version = Keyword.get(envars, :version, "latest")
+    port = Keyword.get(envars, :port, "5432")
 
     %{
       postgres: %{
         image: "postgres:#{version}",
-        ports: ["5432:5432"],
+        ports: ["#{port}:5432"],
         environment: [
           "POSTGRES_PASSWORD=#{password}",
           "POSTGRES_USER=#{user}",
