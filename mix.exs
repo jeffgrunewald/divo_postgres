@@ -6,8 +6,8 @@ defmodule DivoPostgres.MixProject do
   def project do
     [
       app: :divo_postgres,
-      version: "0.2.0",
-      elixir: "~> 1.8",
+      version: "1.0.0",
+      elixir: "~> 1.14",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       docs: docs(),
@@ -26,7 +26,7 @@ defmodule DivoPostgres.MixProject do
 
   defp deps do
     [
-      {:divo, "~> 1.3"},
+      {:divo, "~> 2.0"},
       {:ex_doc, "~> 0.23", only: :dev}
     ]
   end
